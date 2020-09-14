@@ -1,0 +1,77 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "QlockTwo",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Debug::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Debug-Debug-f134f53a0ad42b968ab9.json",
+					"name" : "Debug",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Production::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Production-Debug-3402aaaaf627a37e4508.json",
+					"name" : "Production",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Z_DUMMY_TARGET::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Z_DUMMY_TARGET-Debug-63ce2e3bc6869e2e4828.json",
+					"name" : "Z_DUMMY_TARGET",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)",
+		"source" : "C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

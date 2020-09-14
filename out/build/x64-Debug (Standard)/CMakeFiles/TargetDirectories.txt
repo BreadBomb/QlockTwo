@@ -1,0 +1,5 @@
+C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)/CMakeFiles/Production.dir
+C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)/CMakeFiles/edit_cache.dir
+C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)/CMakeFiles/Debug.dir
+C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)/CMakeFiles/Z_DUMMY_TARGET.dir
+C:/Users/jojo1/Documents/PlatformIO/Projects/QlockTwo/out/build/x64-Debug (Standard)/CMakeFiles/rebuild_cache.dir
