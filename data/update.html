@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .toggle-checkbox:checked {
+            @apply: right-0 border-green-400;
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            @apply: bg-green-400;
+            background-color: #68D391;
+        }
+    </style>
+</head>
+<body>
+<div class="flex flex-col h-full bg-gray-100">
+    <div class="flex justify-between bg-white border-t border-b pl-4 pr-4 pt-2 pb-2 border-gray-300 mb-8">
+        <div class="flex-1">
+            <a href="./index.html" class="bg-transparent border-0">
+                <div class="text-blue-500"><i class="fas fa-chevron-left mr-2"></i><span>Zurück</span></div>
+            </a>
+        </div>
+        <div class="flex-1 flex justify-center font-bold">Systemupdate</div>
+        <div class="flex-1"></div>
+    </div>
+    <div id="search" class="flex justify-center mt-12">
+        <span class="text-lg w-full text-center text-gray-600">Nach updates suchen...</span>
+    </div>
+    <div id="no_update" class="mt-12 hidden">
+        <p class="text-lg w-full text-center text-gray-600">QlockOS v%VERSION%</p>
+        <p class="text-lg w-full text-center text-gray-600">Die Software ist auf dem neusten Stand.</p>
+    </div>
+    <div id="update_info" class="hidden flex flex-col justify-between bg-white border-t border-b pl-4 pr-4 pt-2 pb-2 border-gray-300 mb-8">
+        <div class="flex items-center">
+            <div class="bg-yellow-500 w-16 h-16 flex justify-center items-center rounded-lg">
+                <i class="fas fa-arrow-alt-circle-up text-3xl text-white"></i>
+            </div>
+            <div class="ml-4 text-lg font-bold">
+                QlockOS v<span class="version"></span>
+            </div>
+        </div>
+        <div class="mt-4">
+            QlockOS v<span class="version"></span> enthält folgende neuen Funktionen, sowie Fehlerbehebungen:
+            <ul id="changes" class="ml-6 mt-2 list-disc">
+                
+            </ul>
+        </div>
+    </div>
+    <a id="install_btn" onclick="installUpdate();" class="hidden text-blue-500 flex flex-col justify-between bg-white border-t border-b pl-4 pr-4 pt-2 pb-2 border-gray-300 mb-8">
+        Jetzt installieren...
+    </a>
+</div>
+</div>
+<div id="loading" class="hidden absolute h-full w-full flex justify-center items-center bg-black opacity-1 z-55 bg-opacity-75 top-0">
+    <div class="bg-white p-8 rounded-lg text-gray-700">
+        <div>Das System wird aktuallisiert.</div>
+        <div class="text-center">Bitte warten.</div>
+    </div>
+</div>
+<script>
+    var search = document.getElementById("search");
+    var no_update = document.getElementById("no_update");
+    var update_info = document.getElementById("update_info");
+    var install_btn = document.getElementById("install_btn");
+    var changes = document.getElementById("changes");
+    var loading = document.getElementById("loading");
+
+    var versions = document.querySelectorAll(".version");
+
+    var newVersion = "";
+    
+    fetch("https://qlocktwo.azurewebsites.net/update.json", {headers: {
+        "cache-control": "no-cache"
+    }})
+        .then(result => result.json())
+        .then(result => {
+            versions.forEach(e => {
+                e.innerHTML = result.version;
+            })
+            newVersion = result.version;
+            search.classList.add("hidden");
+            if (result.version === "%VERSION%") {
+                no_update.classList.remove("hidden");
+            } else {
+                update_info.classList.remove("hidden");
+                install_btn.classList.remove("hidden");
+                result.changes.forEach(e => {
+                    changes.innerHTML += "<li>" + e + "</li>";
+                });
+            }
+        });
+
+    function installUpdate() {
+        fetch("http://qlocktwo/api/update", {method: "POST"});
+        loading.classList.remove("hidden");
+        var interval = setInterval(() => {
+            fetch("http://qlocktwo/api/version").then(result => {
+                if (result.text() == newVersion) {
+                    loading.classList.add("hidden");
+                    clearInterval(interval);
+                    location.reload();
+                }
+            });
+        }, 1000);
+    }
+</script>
+</body>
+</html>

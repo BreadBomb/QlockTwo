@@ -8,7 +8,7 @@ void _powerLedFromTo(int from, int to, uint32_t color) {
 }
 
 void showWord(WORD word) {
-    uint32_t color = strip.Color(0, 0, 0, 255);
+    uint32_t color = ledColor;
 
     switch (word) {
         case WORD::ES:
@@ -90,11 +90,11 @@ void showHour(RtcDateTime time) {
     int hour = h24t12(time.Hour());
     int minute = time.Minute();
 
-    if (hour == 0 && minute < 30 || hour == 11 && minute >= 30) {
+    if (hour == 0 && minute < 25 || hour == 11 && minute >= 25 || hour == 12 && minute < 25) {
         showWord(WORD::ZWOELF);
     } else if (hour == 1 && minute < 5) {
         showWord(WORD::EIN);
-    } else if (hour == 1 && minute >= 5 && minute < 30 || hour == 0 && minute >= 30) {
+    } else if (hour == 1 && minute >= 5 && minute < 25 || hour == 0 && minute >= 25 || hour == 12 && minute >= 25) {
         showWord(WORD::EINS);
     } else if (hour == 2 && minute < 25 || hour == 1 && minute >= 25) {
         showWord(WORD::ZWEI);
@@ -120,7 +120,7 @@ void showHour(RtcDateTime time) {
 }
 
 void showPoint(int minute) {
-    uint32_t color = strip.Color(0, 0, 0, 255);
+    uint32_t color = ledColor;
 
     int pointCount = minute % 5;
     if (pointCount >= 1) {

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .toggle-checkbox:checked {
+            @apply: right-0 border-green-400;
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            @apply: bg-green-400;
+            background-color: #68D391;
+        }
+    </style>
+</head>
+<body>
+<div class="flex flex-col h-full bg-gray-100">
+    <p class="font-sans text-4xl ml-4 font-bold mt-8 mb-2 antialiased">QlockTwo</p>
+    <div id="update" class="hidden bg-orange-100 border-t border-b pl-4 pr-4 pt-2 pb-2 border-orange-300 mb-4">
+        Ein neues Update ist verfügbar!
+    </div>
+    <div class="bg-white border-t border-b pl-4 pr-4 pt-2 pb-2 border-gray-300 mb-4">
+        <div class="flex justify-between">
+            <span class="font-bold">Version:</span>
+            <span>%VERSION%</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="font-bold">Aktuelle Uhrzeit:</span>
+            <span>%TIME%</span>
+        </div>
+    </div>
+    <div class=" bg-white border-t border-b pt-2 pb-2 border-gray-300 mb-4">
+        <div class="flex items-center pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-orange-500 h-8 w-8 rounded-md">
+                <i class="fas fa-power-off text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Eingeschaltet</span>
+                <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                    <input type="checkbox" onchange="powerChanged()" name="power" id="power" %POWER%
+                           class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                    <label for="power"
+                           class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                </div>
+            </div>
+        </div>
+        <div class="border-b ml-16 mt-2 mb-2"></div>
+        <a href="./time.html" class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-blue-500 h-8 w-8 rounded-md">
+                <i class="fas fa-clock text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Uhrzeit</span>
+                <i class="fas fa-chevron-right text-gray-300"></i>
+            </div>
+        </a>
+        <div class="border-b ml-16 mt-2 mb-2"></div>
+        <div class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-green-500 h-8 w-8 rounded-md">
+                <i class="fas fa-tint text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Farbe</span>
+                <input class="border rounded-sm" onchange="colorChanged()" type="color" id="color" value="%COLOR%">
+            </div>
+        </div>
+        <div class="border-b ml-16 mt-2 mb-2"></div>
+        <div class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-green-500 h-8 w-8 rounded-md">
+                <i class="fas fa-sun text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Automatische Helligkeit</span>
+                <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                    <input type="checkbox" name="bright" id="bright" %AUTO_B%
+                           class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                    <label for="bright"
+                           class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                </div>
+            </div>
+        </div>
+        <div class="border-b ml-16 mt-2 mb-2"></div>
+        <div class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-purple-500 h-8 w-8 rounded-md">
+                <i class="fas fa-magic text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Übergang</span>
+                <select dir="rtl" class="bg-transparent outline-none text-right" name="transition" id="transition">
+                    <option value="0" %NO_TRANSITION_SELECTED%>Kein Übergang</option>
+                    <option value="1" %FADE_TRANSITION%>Verblassen</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class=" bg-white border-t border-b pt-2 pb-2 border-gray-300">
+        <a href="./update.html" class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-yellow-500 h-8 w-8 rounded-md">
+                <i class="fas fa-arrow-alt-circle-up text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg">Systemupdate</span>
+                <i class="fas fa-chevron-right text-gray-300"></i>
+            </div>
+        </a>
+        <div class="border-b ml-16 mt-2 mb-2"></div>
+        <div class="flex pl-4 pr-4">
+            <div class="flex justify-center items-center mr-4 bg-red-500 h-8 w-8 rounded-md">
+                <i class="fas fa-times text-white"></i>
+            </div>
+            <div class="flex flex-1 justify-between items-center">
+                <span class="text-lg text-red-500">Zurücksetzen</span>
+                <i class="fas fa-chevron-right text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var update = document.getElementById("update");
+    var power = document.getElementById("power");
+    var color = document.getElementById("color");
+
+    fetch("https://qlocktwo.azurewebsites.net/update.json", {headers: {
+        "cache-control": "no-cache"
+    }})
+        .then(result => result.json())
+        .then(result => {
+            if (result.version !== "%VERSION%") {
+                update.classList.remove("hidden");
+            }
+        });
+
+    function powerChanged() {
+        fetch("http://qlocktwo/api/settings?power=" + (power.checked ? "true" : "false"), {method: "POST"});
+    }
+
+    function colorChanged() {
+        fetch("http://qlocktwo/api/settings?color=" + HEXToColor(color.value.replace("#", "")), {method: "POST"});
+    }
+
+    function HEXToColor(rrggbb) {
+        var color = rrggbb.substr(0, 2) + rrggbb.substr(2, 2) + rrggbb.substr(4, 2);
+        return parseInt(color, 16);
+    }
+</script>
+</body>
+</html>

@@ -2,8 +2,6 @@
 
 QLOCK_GLOBAL RtcDS3231<TwoWire> Rtc(Wire);
 
-#define countof(a) (sizeof(a) / sizeof(a[0]))
-
 void printDateTime(const RtcDateTime& dt)
 {
     char datestring[20];
@@ -17,7 +15,7 @@ void printDateTime(const RtcDateTime& dt)
             dt.Hour(),
             dt.Minute(),
             dt.Second() );
-    Serial.print(datestring);
+    Serial.println(datestring);
 }
 
 void setupRTC() {
@@ -66,13 +64,17 @@ void setupRTC() {
     {
         Serial.println("RTC was not actively running, starting now");
         Rtc.SetIsRunning(true);
+        Rtc.SetDateTime(compiled);
     }
 
     RtcDateTime now = Rtc.GetDateTime();
     if (now < compiled) 
     {
         Serial.println("RTC is older than compile time!  (Updating DateTime)");
+        printDateTime(compiled);
         Rtc.SetDateTime(compiled);
+        Serial.println(Rtc.LastError());
+        printDateTime(Rtc.GetDateTime());
     }
     else if (now > compiled) 
     {
@@ -89,7 +91,12 @@ void setupRTC() {
     Rtc.SetSquareWavePin(DS3231SquareWavePin_ModeNone); 
 }
 
+void setRtcTime(RtcDateTime rdt) {
+    Rtc.SetDateTime(rdt);
+}
+
 int h24t12(int hour) {
+    if (hour == 0) return 0;
     return hour%12 == 0 ? 12 : hour%12;
 }
 
